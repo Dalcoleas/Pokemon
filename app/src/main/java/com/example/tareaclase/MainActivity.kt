@@ -1,9 +1,11 @@
 package com.example.tareaclase
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.widget.Toast
 import com.example.tareaclase.Models.Pokemon
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -27,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewManager = LinearLayoutManager(this)
-        viewAdapter = PokemonAdapter(pokemon)
+        viewAdapter = PokemonAdapter(pokemon, {item : Pokemon->itemClicked(item)})
 
         rv_pokemon_list.apply {
             setHasFixedSize(true)
@@ -35,5 +37,15 @@ class MainActivity : AppCompatActivity() {
             adapter = viewAdapter
         }
 
+    }
+
+    fun itemClicked(item: Pokemon){
+        Toast.makeText(this, "Clicked: ${item.name}", Toast.LENGTH_LONG).show()
+
+        val intent = Intent(this, PokeActivity::class.java)
+
+        intent.putExtra("name", item.name)
+        intent.putExtra("type", item.type)
+        startActivity(intent)
     }
 }
