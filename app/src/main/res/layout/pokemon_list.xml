@@ -33,14 +33,6 @@
                 android:gravity="center"
                 android:text="Nombre"/>
 
-        <TextView
-                android:id="@+id/tv_pokemon_type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="type"/>
-
 
     </LinearLayout>
 
