@@ -1,4 +1,4 @@
-package com.example.tareaclase
+package com.example.tareaclase.Adapters
 
 import com.example.tareaclase.Models.Pokemon
 import android.support.v7.widget.RecyclerView
@@ -6,20 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
+import com.example.tareaclase.MyPokemonAdapter
+import com.example.tareaclase.R
 import kotlinx.android.synthetic.main.pokemon_list.view.*
-import java.util.ArrayList
 
-class PokemonAdapter(val items: List<Pokemon>, val clickListener: (Pokemon)-> Unit) : RecyclerView.Adapter<PokemonAdapter.ViewHolder>() {
-    // TODO: Para contar elementos creados
-
+class PokemonAdapter(var items: List<Pokemon>, val clickListener: (Pokemon)-> Unit) : RecyclerView.Adapter<PokemonAdapter.ViewHolder>(),
+    MyPokemonAdapter {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.pokemon_list, parent, false)
-
-        /*
-         * TODO: Muestra el valor de contador de view creadas solo se hace aqui, para asegurar
-         * que solo se asigne el valor aqui
-         */
         return ViewHolder(view)
     }
 
@@ -28,23 +23,23 @@ class PokemonAdapter(val items: List<Pokemon>, val clickListener: (Pokemon)-> Un
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
-        val positionActual:Int = position + 1
-
         holder.bind(items[position],clickListener)
+    }
 
-        Glide.with(holder.itemView.context).load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$positionActual.png").into(holder.itemView.img_poke)
-
+    override fun changeDataSet(newDataSet: List<Pokemon>) {
+        this.items = newDataSet
+        notifyDataSetChanged()
     }
 
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
         fun bind(item:  Pokemon, clickListener: (Pokemon) -> Unit) = with(itemView){
-            tv_pokemon_name.text = item.name
+            Glide.with(itemView.context).load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.id+1}.png").into(itemView.img_poke)
+            tv_pokemon_name.text = item.name.capitalize()
             itemView.setOnClickListener{(clickListener(item))}
 
         }
     }
+
 
 }

@@ -1,4 +1,4 @@
-package com.example.tareaclase
+package com.example.tareaclase.Activities
 
 import android.content.Intent
 import android.os.AsyncTask
@@ -7,13 +7,15 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
-import android.widget.Toast
 import com.example.tareaclase.Models.Pokemon
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
+import com.example.tareaclase.Adapters.PokemonAdapter
+import com.example.tareaclase.R
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    inner class AssyncTaskHandleJson : AsyncTask<String,String,String>(){
+    inner class AssyncTaskHandleJson : AsyncTask<String,Void,String>(){
         override fun doInBackground(vararg p0: String?): String {
             val text :String
             val url = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=100"
@@ -63,8 +65,9 @@ class MainActivity : AppCompatActivity() {
             i-> Pokemon(i, JSONObject(pokemon.getString(i)).getString("name"))
         }
 
+
         viewManager = LinearLayoutManager(this)
-        viewAdapter = PokemonAdapter(pokemons, {item : Pokemon->itemClicked(item)})
+        viewAdapter = PokemonAdapter(pokemons, { item: Pokemon -> itemClicked(item) })
 
         rv_pokemon_list.apply {
             setHasFixedSize(true)
@@ -76,11 +79,10 @@ class MainActivity : AppCompatActivity() {
 
 
     fun itemClicked(item: Pokemon){
-        Toast.makeText(this, "Clicked: ${item.name}", Toast.LENGTH_LONG).show()
-
+        //Toast.makeText(this, "Clicked: ${item.id}", Toast.LENGTH_LONG).show()
         val intent = Intent(this, PokeActivity::class.java)
-
         intent.putExtra("name", item.name)
+        intent.putExtra("id", item.id)
         startActivity(intent)
     }
 
