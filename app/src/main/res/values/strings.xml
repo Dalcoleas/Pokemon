@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TareaClase</string>
+    <string name="name">Name</string>
 </resources>

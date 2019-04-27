@@ -6,12 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
-import com.example.tareaclase.MyPokemonAdapter
+import com.example.tareaclase.Utils.MyPokemonAdapter
 import com.example.tareaclase.R
 import kotlinx.android.synthetic.main.pokemon_list.view.*
 
-class PokemonAdapter(var items: List<Pokemon>, val clickListener: (Pokemon)-> Unit) : RecyclerView.Adapter<PokemonAdapter.ViewHolder>(),
+class PokemonAdapter(var items: ArrayList<Pokemon>, val clickListener: (Pokemon)-> Unit) : RecyclerView.Adapter<PokemonAdapter.ViewHolder>(),
+
     MyPokemonAdapter {
+
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.pokemon_list, parent, false)
@@ -26,7 +30,7 @@ class PokemonAdapter(var items: List<Pokemon>, val clickListener: (Pokemon)-> Un
         holder.bind(items[position],clickListener)
     }
 
-    override fun changeDataSet(newDataSet: List<Pokemon>) {
+    override fun changeDataSet(newDataSet: ArrayList<Pokemon>) {
         this.items = newDataSet
         notifyDataSetChanged()
     }
